@@ -1,0 +1,5 @@
+function NotePage() {
+
+}
+
+export { NotePage }
