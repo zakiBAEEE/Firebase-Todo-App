@@ -15,6 +15,10 @@ function App() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   useEffect(() => {
+    document.getElementById('root').setAttribute('class', theme)
+  }, [theme])
+
+  useEffect(() => {
     const storedUser = sessionStorage.getItem('authedUser');
     if (storedUser) {
       setAuthedUser(JSON.parse(storedUser)); // Atur state dari sessionStorage jika ada
@@ -79,7 +83,7 @@ function App() {
   }
   return (
     <ThemeContext.Provider value={ThemeContextValue}>
-      <div className="bg-indigo-300 h-screen flex flex-col gap-y-11">
+      <div className="bg-indigo-300 dark:bg-blue-900 h-screen flex flex-col gap-y-11">
         <header className="flex flex-col gap-1.5 mt-3">
           <NavbarSimple />
         </header>
