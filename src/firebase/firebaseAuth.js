@@ -1,5 +1,5 @@
 import { app } from "./firebaseConfig";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 const auth = getAuth(app);
 
@@ -23,5 +23,18 @@ async function logout() {
     }
 }
 
+function getUser() {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                resolve(user.uid);
+            } else {
+                reject("User belum login");
+            }
+            unsubscribe();
+        });
+    });
+}
+
 // Export semua fungsi agar bisa digunakan di file lain
-export { auth, register, login, logout };
+export { getUser, register, login, logout, auth };

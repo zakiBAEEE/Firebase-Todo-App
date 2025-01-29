@@ -1,12 +1,13 @@
-import { deleteDoc, doc, getDocs, getFirestore, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDocs, getFirestore, query, updateDoc, where } from "firebase/firestore";
 import { app } from "./firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
-import { auth } from "./firebaseAuth";
+import { getUser } from "./firebaseAuth";
+
 
 const db = getFirestore(app);
 
 async function addTodo(todo) {
-    const user = auth.currentUser;
+    const user = getUser()
     try {
         const docRef = await addDoc(collection(db, "todos"), {
             ...todo,
@@ -19,12 +20,24 @@ async function addTodo(todo) {
 }
 
 async function getTodo() {
-    const todos = [];
-    const querySnapshot = await getDocs(collection(db, "todos"));
-    querySnapshot.forEach((doc) => {
-        todos.push({ id: doc.id, ...doc.data() })
-    })
-    return todos;
+
+    const user = await getUser()
+
+    try {
+        const q = query(collection(db, "todos"), where("userId", "==", user))
+
+        const querySnapshot = await getDocs(q);
+
+        const todos = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+
+        return todos;
+
+    } catch (error) {
+        console.log(error.message);
+        return [];
+    }
+
+
 }
 
 async function updateTodo(todoId, updatedData) {
@@ -37,7 +50,7 @@ async function deleteTodo(todoId) {
     await deleteDoc(todoRef);
 }
 
-export { addTodo, getTodo, updateTodo, deleteTodo }
+export { addTodo, getTodo, updateTodo, deleteTodo, db }
 
 
 

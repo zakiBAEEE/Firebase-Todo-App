@@ -7,7 +7,11 @@ function TodoPages() {
     const [todos, setTodos] = useState([]);
 
     useEffect(() => {
-        getTodo().then((todos) => setTodos(todos))
+        const ambilData = async () => {
+            const data = await getTodo()
+            setTodos(data)
+        }
+        ambilData()
     }, [])
 
     function onSubmit(todo) {
