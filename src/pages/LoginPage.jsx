@@ -21,7 +21,7 @@ function LoginPage({ loginHandler }) {
     };
     return (
         <div className="flex justify-center items-center h-screen bg-gray-100">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+            <div className="bg-white p-8 rounded-lg shadow-lg w-96 dark:bg-blue-950">
                 <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
                 <form onSubmit={handleSubmit}>
                     {error && <div className="text-red-500 text-center mb-4">{error}</div>}
