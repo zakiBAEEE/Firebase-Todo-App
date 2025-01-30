@@ -11,24 +11,45 @@ function RegisterPage() {
     const [password, onChangePassword] = useInput();
     const [confPassword, onChangeConfPassword] = useInput();
 
+
+
+    function validation(email, password, confPassword, nama) {
+        // Trim email & nama untuk menghilangkan spasi ekstra
+        email = email.trim();
+        nama = nama.trim();
+
+        // Cek apakah ada input kosong
+        if (!email || !password || !confPassword || !nama) {
+            return new Error("Semua kolom harus diisi!");
+        }
+
+        // Cek apakah password dan confPassword cocok
+        if (password !== confPassword) {
+            return new Error("Password dan Confirm Password tidak cocok!");
+        }
+
+        return null; // Jika semua validasi lolos
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (password !== confPassword) {
-            setError('Password and Confirm Password do not match!');
+        const error = validation(email, password, confPassword, nama);
+
+        if (error) {
+            setError(error.message);
             return;
         }
 
         try {
-            console.log(email, password)
-            await register(email, password)
+            console.log(email, password);
+            await register(email, password);
+        } catch (error) {
+            console.log(error.message);
+            setError(error.message);
         }
-        catch (error) {
+    }
 
-            console.log(error.message)
-            setError(error.message)
-        }
-    };
 
 
     return (
