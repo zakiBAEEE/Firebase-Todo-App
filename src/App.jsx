@@ -14,9 +14,7 @@ import { ThemeContext } from "./contexts/ThemeContext";
 
 function App() {
   // 🌟 State Management
-  const [authedUser, setAuthedUser] = useState(() => {
-    return JSON.parse(sessionStorage.getItem("authedUser")) || null;
-  });
+  const [authedUser, setAuthedUser] = useState(sessionStorage.getItem('authedUser') || null);
 
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "light";

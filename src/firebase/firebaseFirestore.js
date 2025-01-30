@@ -14,11 +14,6 @@ import { getUser } from "./firebaseAuth";
 
 const db = getFirestore(app);
 
-/**
- * Menambahkan to-do baru ke Firestore
- * @param {Object} todo - Data to-do yang akan ditambahkan
- * @returns {Promise<void>}
- */
 async function addTodo(todo) {
     try {
         const userId = await getUser(); // Langsung UID, bukan objek user
@@ -27,18 +22,12 @@ async function addTodo(todo) {
             ...todo,
             userId, // Tidak perlu user.uid lagi
         });
-
         console.log("✅ To-do berhasil disimpan dengan ID:", docRef.id);
     } catch (error) {
         console.error("❌ Gagal menambahkan to-do:", error.message);
         throw error;
     }
 }
-
-/**
- * Mengambil semua to-do milik user dari Firestore
- * @returns {Promise<Array>} - Array daftar to-do
- */
 async function getTodo() {
     try {
         const userId = await getUser(); // Ambil UID
@@ -55,13 +44,6 @@ async function getTodo() {
         return [];
     }
 }
-
-/**
- * Mengupdate data to-do berdasarkan ID
- * @param {string} todoId - ID dari to-do yang akan diperbarui
- * @param {Object} updatedData - Data yang akan diperbarui
- * @returns {Promise<void>}
- */
 async function updateTodo(todoId, updatedData) {
     try {
         const todoRef = doc(db, "todos", todoId);
@@ -72,12 +54,6 @@ async function updateTodo(todoId, updatedData) {
         throw error;
     }
 }
-
-/**
- * Menghapus to-do berdasarkan ID
- * @param {string} todoId - ID dari to-do yang akan dihapus
- * @returns {Promise<void>}
- */
 async function deleteTodo(todoId) {
     try {
         const todoRef = doc(db, "todos", todoId);
@@ -88,6 +64,4 @@ async function deleteTodo(todoId) {
         throw error;
     }
 }
-
-// Export semua fungsi agar bisa digunakan di file lain
 export { addTodo, getTodo, updateTodo, deleteTodo, db };

@@ -67,7 +67,7 @@ export function NavbarSimple() {
                 </Typography>
                 <div className="hidden lg:block">
                     <NavList />
-                    <Button onClick={logout}><FaDoorOpen /></Button>
+                    <Button onClick={async () => await logout()}><FaDoorOpen /></Button>
 
                 </div>
                 <Button className="cursor-pointer" onClick={toggleTheme}>{theme == 'light' ? <FaMoon className="w-16 h-16" /> : <FaSun className="w-16 h-16" />}</Button>
