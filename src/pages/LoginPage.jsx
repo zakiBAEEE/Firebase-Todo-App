@@ -14,6 +14,7 @@ function LoginPage({ loginHandler }) {
         e.preventDefault();
         try {
             loginHandler(email, password);
+            console.log(email, password)
         } catch (error) {
             setError(error.message);
             console.log(error !== null ? error.message : "Error Tidak Sampe");

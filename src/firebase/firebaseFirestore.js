@@ -1,56 +1,93 @@
-import { deleteDoc, doc, getDocs, getFirestore, query, updateDoc, where } from "firebase/firestore";
+import {
+    addDoc,
+    collection,
+    deleteDoc,
+    doc,
+    getDocs,
+    getFirestore,
+    query,
+    updateDoc,
+    where
+} from "firebase/firestore";
 import { app } from "./firebaseConfig";
-import { addDoc, collection } from "firebase/firestore";
 import { getUser } from "./firebaseAuth";
-
 
 const db = getFirestore(app);
 
+/**
+ * Menambahkan to-do baru ke Firestore
+ * @param {Object} todo - Data to-do yang akan ditambahkan
+ * @returns {Promise<void>}
+ */
 async function addTodo(todo) {
-    const user = getUser()
     try {
+        const userId = await getUser(); // Langsung UID, bukan objek user
+
         const docRef = await addDoc(collection(db, "todos"), {
             ...todo,
-            userId: user.uid
+            userId, // Tidak perlu user.uid lagi
         });
-        console.log("Dokumen Berhasil Tersimpan dengan id : ", docRef.id);
+
+        console.log("✅ To-do berhasil disimpan dengan ID:", docRef.id);
     } catch (error) {
-        alert(error.message);
+        console.error("❌ Gagal menambahkan to-do:", error.message);
+        throw error;
     }
 }
 
+/**
+ * Mengambil semua to-do milik user dari Firestore
+ * @returns {Promise<Array>} - Array daftar to-do
+ */
 async function getTodo() {
-
-    const user = await getUser()
-
     try {
-        const q = query(collection(db, "todos"), where("userId", "==", user))
+        const userId = await getUser(); // Ambil UID
 
+        const q = query(collection(db, "todos"), where("userId", "==", userId));
         const querySnapshot = await getDocs(q);
 
-        const todos = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-
-        return todos;
-
+        return querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
     } catch (error) {
-        console.log(error.message);
+        console.error("❌ Gagal mengambil to-do:", error.message);
         return [];
     }
-
-
 }
 
+/**
+ * Mengupdate data to-do berdasarkan ID
+ * @param {string} todoId - ID dari to-do yang akan diperbarui
+ * @param {Object} updatedData - Data yang akan diperbarui
+ * @returns {Promise<void>}
+ */
 async function updateTodo(todoId, updatedData) {
-    const todoRef = doc(db, "todos", todoId);
-    await updateDoc(todoRef, updatedData);
+    try {
+        const todoRef = doc(db, "todos", todoId);
+        await updateDoc(todoRef, updatedData);
+        console.log("✅ To-do berhasil diperbarui:", todoId);
+    } catch (error) {
+        console.error("❌ Gagal mengupdate to-do:", error.message);
+        throw error;
+    }
 }
 
+/**
+ * Menghapus to-do berdasarkan ID
+ * @param {string} todoId - ID dari to-do yang akan dihapus
+ * @returns {Promise<void>}
+ */
 async function deleteTodo(todoId) {
-    const todoRef = doc(db, "todos", todoId);
-    await deleteDoc(todoRef);
+    try {
+        const todoRef = doc(db, "todos", todoId);
+        await deleteDoc(todoRef);
+        console.log("✅ To-do berhasil dihapus:", todoId);
+    } catch (error) {
+        console.error("❌ Gagal menghapus to-do:", error.message);
+        throw error;
+    }
 }
 
-export { addTodo, getTodo, updateTodo, deleteTodo, db }
-
-
-
+// Export semua fungsi agar bisa digunakan di file lain
+export { addTodo, getTodo, updateTodo, deleteTodo, db };
