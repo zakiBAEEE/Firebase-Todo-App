@@ -62,7 +62,7 @@ function App() {
   // 🏠 Rendering UI
   return (
     <ThemeContext.Provider value={themeContextValue}>
-      <div className={`h-screen flex flex-col gap-y-11 ${theme === "dark" ? "bg-blue-900" : "bg-white"} mt-4`}>
+      <div className={`h-screen flex flex-col gap-y-11 ${theme === "dark" ? "bg-gray-900" : "bg-white"} mt-4`}>
         {authedUser ? (
           <>
 
