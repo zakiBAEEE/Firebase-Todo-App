@@ -3,8 +3,6 @@ import { useInput } from "../customHooks/useInput"
 import PropTypes from "prop-types";
 import { FaPlus } from "react-icons/fa";
 
-
-
 function InputTodo({ onSubmit }) {
     const [inputTodo, onChangeTodos, reset] = useInput();
 
