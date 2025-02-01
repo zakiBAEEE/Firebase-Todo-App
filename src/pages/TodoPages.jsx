@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { InputTodo } from "../components/Input"
 import { TodoList } from "../components/TodoList";
 import { addTodo, deleteTodo, getTodo } from "../firebase/firebaseFirestore";
+import { Overview } from "../components/Overview";
 
 function TodoPages() {
     const [todos, setTodos] = useState([]);
@@ -25,6 +26,7 @@ function TodoPages() {
     }
     return (
         <div className="flex flex-col gap-4">
+            <Overview />
             <InputTodo onSubmit={onSubmit} />
             <TodoList todos={todos} onDelete={onDelete} />
         </div>
