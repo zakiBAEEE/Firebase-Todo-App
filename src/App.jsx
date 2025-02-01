@@ -68,7 +68,7 @@ function App() {
 
             <Navigasi />
 
-            <main className="mx-10">
+            <main className="mx-16">
               <Routes>
                 <Route path="/" element={<TodoPages />} />
               </Routes>
