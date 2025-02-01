@@ -9,7 +9,7 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { login } from "./firebase/firebaseAuth";
 import { auth } from "./firebase/firebaseAuth";
 import { ThemeContext } from "./contexts/ThemeContext";
-import { Navigation } from "./components/Navbar";
+import { Navigasi } from "./components/Navbar";
 
 function App() {
   // 🌟 State Management
@@ -66,7 +66,7 @@ function App() {
         {authedUser ? (
           <>
 
-            <Navigation />
+            <Navigasi />
 
             <main className="mx-10">
               <Routes>
