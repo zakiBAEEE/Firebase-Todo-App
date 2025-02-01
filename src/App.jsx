@@ -2,19 +2,19 @@ import { useEffect, useMemo, useState } from "react";
 import { Route, Routes } from "react-router";
 import { onAuthStateChanged } from "firebase/auth";
 
-import { NavbarSimple } from "./components/Navigation";
 import { TodoPages } from "./pages/TodoPages";
-import { NotePage } from "./pages/NotePages";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 
 import { login } from "./firebase/firebaseAuth";
 import { auth } from "./firebase/firebaseAuth";
 import { ThemeContext } from "./contexts/ThemeContext";
+import { Navigation } from "./components/Navbar";
 
 function App() {
   // 🌟 State Management
   const [authedUser, setAuthedUser] = useState(sessionStorage.getItem('authedUser') || null);
+
 
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "light";
@@ -32,7 +32,7 @@ function App() {
 
   const themeContextValue = useMemo(() => ({ theme, toggleTheme }), [theme]);
 
-  // 🔑 Authentication Listener
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -62,28 +62,21 @@ function App() {
   // 🏠 Rendering UI
   return (
     <ThemeContext.Provider value={themeContextValue}>
-      <div className={`h-screen flex flex-col gap-y-11 ${theme === "dark" ? "bg-blue-900" : "bg-indigo-300"}`}>
+      <div className={`h-screen flex flex-col gap-y-11 ${theme === "dark" ? "bg-blue-900" : "bg-white"} mt-4`}>
         {authedUser ? (
           <>
-            {/* Header */}
-            <header className="flex flex-col gap-1.5 mt-3">
-              <NavbarSimple />
-            </header>
 
-            {/* Main Content */}
+            <Navigation />
+
             <main className="mx-10">
               <Routes>
                 <Route path="/" element={<TodoPages />} />
-                <Route path="/notes" element={<NotePage />} />
               </Routes>
             </main>
           </>
         ) : (
           <>
-            {/* Header kosong agar layout tetap stabil */}
             <header></header>
-
-            {/* Login/Register Page */}
             <main>
               <Routes>
                 <Route path="/" element={<LoginPage loginHandler={loginHandler} />} />

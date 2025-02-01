@@ -1,5 +1,0 @@
-function NotePage() {
-
-}
-
-export { NotePage }

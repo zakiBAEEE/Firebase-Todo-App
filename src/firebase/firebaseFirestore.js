@@ -28,6 +28,7 @@ async function addTodo(todo) {
         throw error;
     }
 }
+
 async function getTodo() {
     try {
         const userId = await getUser(); // Ambil UID
