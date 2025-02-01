@@ -8,8 +8,12 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { logout } from "../firebase/firebaseAuth";
+import { FaMoon, FaSun } from "react-icons/fa";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 function ProfileMenu() {
+    const { theme, toggleTheme } = useContext(ThemeContext)
     return (
         <Menu>
             <MenuHandler>
@@ -99,6 +103,12 @@ function ProfileMenu() {
                     </svg>
                     <Typography variant="small" className="font-medium" onClick={async () => await logout()}>
                         Sign Out
+                    </Typography>
+                </MenuItem>
+                <MenuItem className="flex items-center gap-2" onClick={toggleTheme}>
+                    {theme == 'light' ? <FaMoon /> : <FaSun />}
+                    <Typography variant="small" className="font-medium">
+                        {theme == 'light' ? "Dark Theme" : "Light Theme"}
                     </Typography>
                 </MenuItem>
             </MenuList>
