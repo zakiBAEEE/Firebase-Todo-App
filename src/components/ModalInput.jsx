@@ -3,16 +3,16 @@ import PropTypes from "prop-types"
 import { useInput } from "../customHooks/useInput"
 import * as emoji from 'node-emoji'
 
-function ModalInput({ handleOpen, size }) {
+function ModalInput({ handleOpen }) {
     const [title, onChangeTitle] = useInput();
     const [body, onChangeBody] = useInput();
     return (
         <>
-            <Dialog open={size == 'lg'} size="lg" handler={handleOpen}>
+            <Dialog open='lg' size="lg" handler={handleOpen} className="bg-opacity-20 backdrop-blur-sm">
                 <DialogHeader><input
                     type="text"
                     placeholder={`Apa Tugas Anda ${emoji.get(':dart:')}`}
-                    className="bg-transparent outline-none border-none text-gray-700 font-bold w-full"
+                    className="bg-transparent outline-none border-none text-gray-700 font-bold w-full "
                     value={title}
                     onChange={onChangeTitle}
                 />
@@ -27,7 +27,7 @@ function ModalInput({ handleOpen, size }) {
                     <Button
                         variant="text"
                         color="red"
-                        onClick={() => handleOpen(null)}
+                        onClick={() => handleOpen(false)}
                         className="mr-1"
                     >
                         <span>Cancel</span>
@@ -35,7 +35,7 @@ function ModalInput({ handleOpen, size }) {
                     <Button
                         variant="gradient"
                         color="green"
-                        onClick={() => handleOpen(null)}
+                        onClick={() => handleOpen(false)}
                     >
                         <span>Confirm</span>
                     </Button>
