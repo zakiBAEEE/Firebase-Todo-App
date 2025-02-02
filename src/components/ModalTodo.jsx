@@ -10,9 +10,11 @@ function ModalTodo({ handleOpen, idDoc }) {
     const [body, onChangeBody] = useInput();
 
     useEffect(() => {
+
         const simpanTodo = async () => {
             idDoc && (await updateTodo(idDoc, { title, body }))
         }
+        if (!idDoc || title.trim() === "" && body.trim() === "") return;
         simpanTodo()
     }, [title, body])
 
