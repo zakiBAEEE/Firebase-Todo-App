@@ -20,7 +20,7 @@ function ModalTodo({ handleOpen, idDoc }) {
 
     return (
         <>
-            <Dialog open='lg' size="lg" handler={handleOpen} className="bg-opacity-20 backdrop-blur-sm">
+            <Dialog size="lg" handler={handleOpen} className="bg-opacity-20 backdrop-blur-sm">
                 <DialogHeader><input
                     type="text"
                     placeholder={`Apa Tugas Anda ${emoji.get(':dart:')}`}
@@ -59,7 +59,7 @@ function ModalTodo({ handleOpen, idDoc }) {
 
 ModalTodo.propTypes = {
     handleOpen: PropTypes.func.isRequired,
-    idDoc: PropTypes.func.isRequired,
+    idDoc: PropTypes.string
 }
 
 export { ModalTodo }
