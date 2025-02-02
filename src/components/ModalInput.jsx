@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { useInput } from "../customHooks/useInput"
 import * as emoji from 'node-emoji'
 
-function ModalInput({ handleOpen }) {
+function ModalTodo({ handleOpen }) {
     const [title, onChangeTitle] = useInput();
     const [body, onChangeBody] = useInput();
     return (
@@ -45,9 +45,9 @@ function ModalInput({ handleOpen }) {
     )
 }
 
-ModalInput.propTypes = {
+ModalTodo.propTypes = {
     handleOpen: PropTypes.func.isRequired,
     size: PropTypes.string.isRequired
 }
 
-export { ModalInput }
+export { ModalTodo }
