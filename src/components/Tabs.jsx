@@ -30,7 +30,7 @@ function Tabs() {
                     <FaFilter color={theme == 'light' ? "black" : "white"} className="cursor-pointer" />
                     <FaSort color={theme == 'light' ? "black" : "white"} className="cursor-pointer" />
                     <FiSearch color={theme == 'light' ? "black" : "white"} className="cursor-pointer" />
-                    <Button size="sm" color={theme == 'light' ? "blue" : "green"} className="w-16 h-6 p-0 mb-1 cursor-pointer" onClick={() => handleOpen("xl")}>Add</Button>
+                    <Button size="sm" color={theme == 'light' ? "blue" : "green"} className="w-16 h-6 p-0 mb-1 cursor-pointer" onClick={() => handleOpen("lg")}>Add</Button>
                 </div>
             </div>
             <div className="dark:bg-white bg-gray-800 h-[1px] w-full"></div>

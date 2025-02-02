@@ -1,17 +1,27 @@
 import { Button, Dialog, DialogBody, DialogFooter, DialogHeader } from "@material-tailwind/react"
 import PropTypes from "prop-types"
-
+import { useInput } from "../customHooks/useInput"
+import * as emoji from 'node-emoji'
 
 function ModalInput({ handleOpen, size }) {
+    const [title, onChangeTitle] = useInput();
+    const [body, onChangeBody] = useInput();
     return (
         <>
-            <Dialog open={size == 'xl'} size="xl" handler={handleOpen}>
-                <DialogHeader>Its a simple modal.</DialogHeader>
+            <Dialog open={size == 'lg'} size="lg" handler={handleOpen}>
+                <DialogHeader><input
+                    type="text"
+                    placeholder={`Apa Tugas Anda ${emoji.get(':dart:')}`}
+                    className="bg-transparent outline-none border-none text-gray-700 font-bold w-full"
+                    value={title}
+                    onChange={onChangeTitle}
+                />
+                </DialogHeader>
                 <DialogBody>
-                    The key to more success is to have a lot of pillows. Put it this way,
-                    it took me twenty five years to get these plants, twenty five years of
-                    blood sweat and tears, and I&apos;m never giving up, I&apos;m just
-                    getting started. I&apos;m up to something. Fan luv.
+                    <textarea placeholder={`Apa step yang harus dilakukan ${emoji.get(':pushpin:')}??`}
+                        className="w-full bg-transparent outline-none border-none text-gray-700 font-bold"
+                        value={body}
+                        onChange={onChangeBody}></textarea>
                 </DialogBody>
                 <DialogFooter>
                     <Button
