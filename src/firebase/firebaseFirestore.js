@@ -14,15 +14,17 @@ import { getUser } from "./firebaseAuth";
 
 const db = getFirestore(app);
 
-async function addTodo(todo) {
+async function addTodo(todo = null) {
     try {
-        const userId = await getUser(); // Langsung UID, bukan objek user
+        const userId = await getUser();
 
         const docRef = await addDoc(collection(db, "todos"), {
             ...todo,
-            userId, // Tidak perlu user.uid lagi
+            userId,
         });
         console.log("✅ To-do berhasil disimpan dengan ID:", docRef.id);
+        return docRef.id
+
     } catch (error) {
         console.error("❌ Gagal menambahkan to-do:", error.message);
         throw error;

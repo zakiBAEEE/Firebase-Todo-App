@@ -2,10 +2,20 @@ import { Button, Dialog, DialogBody, DialogFooter, DialogHeader } from "@materia
 import PropTypes from "prop-types"
 import { useInput } from "../customHooks/useInput"
 import * as emoji from 'node-emoji'
+import { useEffect } from "react";
+import { updateTodo } from "../firebase/firebaseFirestore";
 
-function ModalTodo({ handleOpen }) {
+function ModalTodo({ handleOpen, idDoc }) {
     const [title, onChangeTitle] = useInput();
     const [body, onChangeBody] = useInput();
+
+    useEffect(() => {
+        const simpanTodo = async () => {
+            idDoc && (await updateTodo(idDoc, { title, body }))
+        }
+        simpanTodo()
+    }, [title, body])
+
     return (
         <>
             <Dialog open='lg' size="lg" handler={handleOpen} className="bg-opacity-20 backdrop-blur-sm">
@@ -47,7 +57,7 @@ function ModalTodo({ handleOpen }) {
 
 ModalTodo.propTypes = {
     handleOpen: PropTypes.func.isRequired,
-    size: PropTypes.string.isRequired
+    idDoc: PropTypes.func.isRequired,
 }
 
 export { ModalTodo }
