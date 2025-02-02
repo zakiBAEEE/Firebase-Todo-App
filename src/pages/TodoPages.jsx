@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { InputTodo } from "../components/Input"
-import { TodoList } from "../components/TodoList";
 import { addTodo, deleteTodo, getTodo } from "../firebase/firebaseFirestore";
 import { Overview } from "../components/Overview";
 import { Tabs } from "../components/Tabs";
