@@ -17,7 +17,6 @@ function InputTodo({ onSubmit }) {
         <form onSubmit={onSubmitHandler} className="flex gap-2 justify-center items-center">
             <Input value={inputTodo} onChange={onChangeTodos} color="black" className="border border-gray-500 shadow-none" />
             <Button type="submit" size="sm" className="flex gap-1 justify-center items-center"><FaPlus /> Tambah</Button>
-
         </form>
     )
 }

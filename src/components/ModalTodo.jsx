@@ -20,7 +20,7 @@ function ModalTodo({ handleOpen, idDoc }) {
 
     return (
         <>
-            <Dialog size="lg" handler={handleOpen} className="bg-opacity-20 backdrop-blur-sm">
+            <Dialog open={true} size="lg" handler={handleOpen} className="bg-opacity-20 backdrop-blur-sm">
                 <DialogHeader><input
                     type="text"
                     placeholder={`Apa Tugas Anda ${emoji.get(':dart:')}`}
@@ -37,19 +37,11 @@ function ModalTodo({ handleOpen, idDoc }) {
                 </DialogBody>
                 <DialogFooter>
                     <Button
-                        variant="text"
-                        color="red"
-                        onClick={() => handleOpen(false)}
-                        className="mr-1"
-                    >
-                        <span>Cancel</span>
-                    </Button>
-                    <Button
                         variant="gradient"
                         color="green"
                         onClick={() => handleOpen(false)}
                     >
-                        <span>Confirm</span>
+                        <span>Tutup</span>
                     </Button>
                 </DialogFooter>
             </Dialog>
