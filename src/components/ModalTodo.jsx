@@ -2,21 +2,31 @@ import { Button, Dialog, DialogBody, DialogFooter, DialogHeader } from "@materia
 import PropTypes from "prop-types"
 import { useInput } from "../customHooks/useInput"
 import * as emoji from 'node-emoji'
-import { useEffect } from "react";
-import { updateTodo } from "../firebase/firebaseFirestore";
+import { useEffect, useState } from "react";
+import { addTodo, updateTodo } from "../firebase/firebaseFirestore";
+import { FaPlus } from "react-icons/fa";
+import { TodoList } from "./TodoList";
 
-function ModalTodo({ handleOpen, idDoc }) {
+function ModalTodo({ handleOpen, taskId }) {
     const [title, onChangeTitle] = useInput();
-    const [body, onChangeBody] = useInput();
+    const [todos, setTodos] = useState([]);
+
+    const addTodoItem = async () => {
+        try {
+            const todoId = await addTodo(taskId); // Menambahkan todo kosong ke Firestore
+            setTodos((prevState) => [...prevState, { todo: "", todoId }])
+        } catch (error) {
+            console.error("Gagal menambahkan todo:", error);
+        }
+    };
 
     useEffect(() => {
-
         const simpanTodo = async () => {
-            idDoc && (await updateTodo(idDoc, { title, body }))
+            taskId && (await updateTodo(taskId, { title }))
         }
-        if (!idDoc || title.trim() === "" && body.trim() === "") return;
+        if (!taskId || title.trim() === "") return;
         simpanTodo()
-    }, [title, body])
+    }, [taskId, title])
 
     return (
         <>
@@ -30,10 +40,8 @@ function ModalTodo({ handleOpen, idDoc }) {
                 />
                 </DialogHeader>
                 <DialogBody>
-                    <textarea placeholder={`Apa step yang harus dilakukan ${emoji.get(':pushpin:')}??`}
-                        className="w-full bg-transparent outline-none border-none text-gray-700 font-bold"
-                        value={body}
-                        onChange={onChangeBody}></textarea>
+                    <TodoList todos={todos} taskId={taskId} />
+                    <FaPlus className="cursor-pointer" onClick={addTodoItem} />
                 </DialogBody>
                 <DialogFooter>
                     <Button
@@ -51,7 +59,7 @@ function ModalTodo({ handleOpen, idDoc }) {
 
 ModalTodo.propTypes = {
     handleOpen: PropTypes.func.isRequired,
-    idDoc: PropTypes.string
+    taskId: PropTypes.string
 }
 
 export { ModalTodo }

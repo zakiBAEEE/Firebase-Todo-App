@@ -14,11 +14,35 @@ import { getUser } from "./firebaseAuth";
 
 const db = getFirestore(app);
 
-async function addTodo(todo = null) {
+async function addTodo(taskId, todo = "") {
+    try {
+
+        const docRef = await addDoc(collection(db, "task", taskId, "todos"), {
+            todo,
+        })
+        console.log("✅ To-do berhasil disimpan dengan ID:", docRef.id);
+        return docRef.id
+    } catch (error) {
+        console.error("❌ Gagal menambahkan to-do:", error.message);
+    }
+}
+
+async function updateTodoItem(taskId, todoId, newTodo) {
+    try {
+        await updateDoc(doc(db, "task", taskId, "todos", todoId), {
+            todo: newTodo
+        });
+    } catch (error) {
+        console.error("Gagal mengupdate todo:", error);
+    }
+}
+
+
+async function addTask(todo = null) {
     try {
         const userId = await getUser();
 
-        const docRef = await addDoc(collection(db, "todos"), {
+        const docRef = await addDoc(collection(db, "task"), {
             ...todo,
             userId,
         });
@@ -35,7 +59,7 @@ async function getTodo() {
     try {
         const userId = await getUser(); // Ambil UID
 
-        const q = query(collection(db, "todos"), where("userId", "==", userId));
+        const q = query(collection(db, "task"), where("userId", "==", userId));
         const querySnapshot = await getDocs(q);
 
         return querySnapshot.docs.map((doc) => ({
@@ -49,7 +73,7 @@ async function getTodo() {
 }
 async function updateTodo(todoId, updatedData) {
     try {
-        const todoRef = doc(db, "todos", todoId);
+        const todoRef = doc(db, "task", todoId);
         await updateDoc(todoRef, updatedData);
         console.log("✅ To-do berhasil diperbarui:", todoId);
     } catch (error) {
@@ -59,7 +83,7 @@ async function updateTodo(todoId, updatedData) {
 }
 async function deleteTodo(todoId) {
     try {
-        const todoRef = doc(db, "todos", todoId);
+        const todoRef = doc(db, "task", todoId);
         await deleteDoc(todoRef);
         console.log("✅ To-do berhasil dihapus:", todoId);
     } catch (error) {
@@ -67,4 +91,4 @@ async function deleteTodo(todoId) {
         throw error;
     }
 }
-export { addTodo, getTodo, updateTodo, deleteTodo, db };
+export { addTask, getTodo, updateTodo, deleteTodo, db, addTodo, updateTodoItem };
