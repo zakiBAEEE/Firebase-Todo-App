@@ -6,7 +6,6 @@ import { ProfileMenu } from "./ProfileMenu";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
 
-
 function Navigasi() {
     const { theme } = useContext(ThemeContext);
     return (

@@ -71,7 +71,7 @@ async function getTodo() {
         return [];
     }
 }
-async function updateTodo(todoId, updatedData) {
+async function updateTitle(todoId, updatedData) {
     try {
         const todoRef = doc(db, "task", todoId);
         await updateDoc(todoRef, updatedData);
@@ -91,4 +91,4 @@ async function deleteTodo(todoId) {
         throw error;
     }
 }
-export { addTask, getTodo, updateTodo, deleteTodo, db, addTodo, updateTodoItem };
+export { addTask, getTodo, updateTitle, deleteTodo, db, addTodo, updateTodoItem };

@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { useInput } from "../customHooks/useInput"
 import * as emoji from 'node-emoji'
 import { useEffect, useState } from "react";
-import { addTodo, updateTodo } from "../firebase/firebaseFirestore";
+import { addTodo, updateTitle } from "../firebase/firebaseFirestore";
 import { FaPlus } from "react-icons/fa";
 import { TodoList } from "./TodoList";
 
@@ -22,7 +22,7 @@ function ModalTodo({ handleOpen, taskId }) {
 
     useEffect(() => {
         const simpanTodo = async () => {
-            taskId && (await updateTodo(taskId, { title }))
+            taskId && (await updateTitle(taskId, { title }))
         }
         if (!taskId || title.trim() === "") return;
         simpanTodo()

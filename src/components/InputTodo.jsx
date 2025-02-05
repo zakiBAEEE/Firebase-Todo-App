@@ -24,7 +24,7 @@ function InputTodo() {
     return (
         <>
             <Button size="sm" color={theme == 'light' ? "blue" : "green"} className="w-16 h-6 p-0 mb-1 cursor-pointer" onClick={handleOpenModal}>Add</Button>
-            {openModal && <ModalTodo handleOpen={handleOpen} taskId={taskId} />}
+            {openModal && <ModalTodo handleOpen={handleOpen} taskId={taskId} className="overflow-scroll" />}
         </>
     )
 }
