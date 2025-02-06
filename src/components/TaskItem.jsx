@@ -6,10 +6,12 @@ import {
     Button,
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router";
 
-function TaskItem({ title }) {
+function TaskItem({ id, title }) {
+    const navigate = useNavigate();
     return (
-        <Card className="mt-6 w-96">
+        <Card className="mt-6 w-96 cursor-pointer" onClick={() => navigate(`/detail-todo/${id}`)}>
             <CardBody>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -57,6 +59,7 @@ function TaskItem({ title }) {
 }
 
 TaskItem.propTypes = {
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
 }

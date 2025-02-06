@@ -5,9 +5,11 @@ import {
 import { ProfileMenu } from "./ProfileMenu";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { useNavigate } from "react-router";
 
 function Navigasi() {
     const { theme } = useContext(ThemeContext);
+    const navigate = useNavigate();
     return (
         <div className="-m-6 max-h-[768px] w-[calc(100%+48px)] ">
             <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 dark:bg-gray-900">
@@ -17,6 +19,7 @@ function Navigasi() {
                         href="#"
                         className="mr-4 cursor-pointer py-1.5 font-medium"
                         color={theme == 'light' ? "black" : 'white'}
+                        onClick={() => navigate("/")}
                     >
                         ChoreHub
                     </Typography>
