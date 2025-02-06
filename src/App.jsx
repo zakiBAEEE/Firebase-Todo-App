@@ -10,6 +10,7 @@ import { login } from "./firebase/firebaseAuth";
 import { auth } from "./firebase/firebaseAuth";
 import { ThemeContext } from "./contexts/ThemeContext";
 import { Navigasi } from "./components/Navbar";
+import { DetailTodo } from "./components/DetailTodo";
 
 function App() {
   // 🌟 State Management
@@ -70,6 +71,7 @@ function App() {
             <main className="mx-16">
               <Routes>
                 <Route path="/" element={<TodoPages />} />
+                <Route path="/todo/:id" element={<DetailTodo />} />
               </Routes>
             </main>
           </>
