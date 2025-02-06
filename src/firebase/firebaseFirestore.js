@@ -55,7 +55,7 @@ async function addTask(todo = null) {
     }
 }
 
-async function getTodo() {
+async function getTask() {
     try {
         const userId = await getUser(); // Ambil UID
 
@@ -81,7 +81,7 @@ async function updateTitle(todoId, updatedData) {
         throw error;
     }
 }
-async function deleteTodo(todoId) {
+async function deleteTask(todoId) {
     try {
         const todoRef = doc(db, "task", todoId);
         await deleteDoc(todoRef);
@@ -91,4 +91,4 @@ async function deleteTodo(todoId) {
         throw error;
     }
 }
-export { addTask, getTodo, updateTitle, deleteTodo, db, addTodo, updateTodoItem };
+export { addTask, getTask, updateTitle, deleteTask, db, addTodo, updateTodoItem };

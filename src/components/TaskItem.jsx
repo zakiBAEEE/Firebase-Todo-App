@@ -7,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 
-function CardTask({ title, body }) {
+function TaskItem({ title }) {
     return (
         <Card className="mt-6 w-96">
             <CardBody>
@@ -28,7 +28,7 @@ function CardTask({ title, body }) {
                     {title}
                 </Typography>
                 <Typography>
-                    {body}
+                    Ini Body
                 </Typography>
             </CardBody>
             <CardFooter className="pt-0">
@@ -56,9 +56,9 @@ function CardTask({ title, body }) {
     );
 }
 
-CardTask.propTypes = {
+TaskItem.propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
 }
 
-export { CardTask }
+export { TaskItem }

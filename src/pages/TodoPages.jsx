@@ -1,34 +1,33 @@
 import { useEffect, useState } from "react";
-import { addTodo, deleteTodo, getTodo } from "../firebase/firebaseFirestore";
+import { db } from "../firebase/firebaseFirestore";
 import { Overview } from "../components/Overview";
 import { Tabs } from "../components/Tabs";
+import { TaskList } from "../components/TaskList";
+import { collection, onSnapshot } from "firebase/firestore";
 
 function TodoPages() {
-    const [todos, setTodos] = useState([]);
+    const [task, setTask] = useState([]);
 
     useEffect(() => {
-        const ambilData = async () => {
-            const data = await getTodo()
-            setTodos(data)
-        }
-        ambilData()
-    }, [])
+        const taskRef = collection(db, "task"); // Referensi ke koleksi "task"
 
-    function onSubmit(todo) {
-        addTodo(todo)
-        getTodo().then((todos) => setTodos(todos))
-    }
+        const unsubscribe = onSnapshot(taskRef, (snapshot) => {
+            const taskData = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setTask(taskData);
+        });
 
-    function onDelete(id) {
-        deleteTodo(id)
-        getTodo().then((todos) => setTodos(todos))
-    }
+        return () => unsubscribe(); // Unsubscribe saat komponen unmount
+    }, []);
+
+
     return (
         <div className="flex flex-col gap-4">
             <Overview />
             <Tabs />
-            {/* <InputTodo onSubmit={onSubmit} />
-            <TodoList todos={todos} onDelete={onDelete} /> */}
+            <TaskList taskList={task} />
         </div>
     )
 }
